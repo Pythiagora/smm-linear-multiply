@@ -1,0 +1,6 @@
+smm_schoenhage.py — reference interpreter (run_reference) vs compiled machine (FastSMM)
+Input: x = 1, y = 1, N = 1 (n = 6, B = 4). poito, 23/09/2026, 19:10 (Paris).
+
+reference: steps 230950872  nodes 16347247  output 1  147 s
+compiled:  steps 230950872  nodes 16347247  output 1   28 s
+IDENTICAL (output, step count, number of `new` executed)

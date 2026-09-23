@@ -1,0 +1,17 @@
+SMM program
+  [PASS] instruction audit (batched)  — 8578 instructions {'NEW': 570, 'SET': 5475, 'TEST_EQ': 1286, 'GOTO': 1236, 'INPUT': 4, 'OUTPUT': 5, 'HALT': 2}, max word length 38, centre fixed: True
+  [PASS] instruction audit (direct)  — 7855 instructions {'NEW': 540, 'SET': 4659, 'TEST_EQ': 1328, 'GOTO': 1317, 'INPUT': 4, 'OUTPUT': 5, 'HALT': 2}, max word length 38, centre fixed: True
+Digit kernels (host oracle)
+  [PASS] kernels = modular arithmetic  — 9450 kernel evaluations
+Parameter rule
+  [PASS] a modulus q = h·β²+1 with a^((q-1)/2) ≡ -1 exists for every L in 3..40
+Reference interpreter vs compiled interpreter
+  [PASS] identical runs for 0×0 bits  — 121,601 steps
+  [PASS] identical runs for 3×2 bits  — 128,497 steps
+  [PASS] identical runs for 41×23 bits  — 744,500 steps
+Products checked against Python integers
+  [PASS] 119 random/edge products (batched lookups)
+  [PASS] 60 random/edge products (direct lookups)
+Parameters computed by the SMM (read back from its pointer structure)
+  [PASS] L, s, d, h match the rule
+ALL PASSED  (173 s)

@@ -1,0 +1,33 @@
+ok   §2 counterexample: p*(PP) = p*(QQ) = a ≠ p*(P)
+ok   listing ↔ parse round trip (small program)
+ok   reverse-copy program: reference = compiled
+ok   listing ↔ parse round trip (multiplier, 21610 instructions)
+ok   N = 1: n = 6, B = 4, scale pointers
+ok   N = 192: n = 6, B = 4, scale pointers
+ok   N = 193: n = 9, B = 8, scale pointers
+ok   N = 2304: n = 9, B = 8, scale pointers
+ok   N = 2305: n = 12, B = 16, scale pointers
+ok   basic digital operations, all 48 pairs, B = 4
+ok   digit-op program: reference = compiled (steps, nodes, output)
+ok   basic digital operations, all 192 pairs, B = 8
+ok   basic digital operations, all 768 pairs, B = 16
+ok   numerical programs +, −, ·, /2, complex products, B = 4
+ok   numerical programs +, −, ·, /2, complex products, B = 8
+ok   numerical programs +, −, ·, /2, complex products, B = 16
+ok   roots w_2 … w_6 and their powers (6.11), n = 6
+ok   roots w_2 … w_9 and their powers (6.11), n = 9
+ok   roots w_2 … w_12 and their powers (6.11), n = 12
+ok   host model n = 6: 23 products exact, worst error 0.0044·2^-4n
+ok   host model n = 9: 23 products exact, worst error 0.0001·2^-4n
+ok   N = 8 (n = 6): 240,932,410 steps, 16,347,275 nodes allocated, 28 s
+ok   N = 1 (n = 6): 230,950,872 steps, 16,347,247 nodes allocated, 23 s
+ok   N = 64 (n = 6): 248,852,658 steps, 16,347,499 nodes allocated, 25 s
+ok   N = 192 (n = 6): 246,802,696 steps, 16,348,011 nodes allocated, 25 s
+ok   N = 100 (n = 6): 250,545,727 steps, 16,347,643 nodes allocated, 27 s
+ok   N = 150 (n = 6): 251,693,457 steps, 16,347,843 nodes allocated, 25 s
+ok   N = 192 (n = 6): 251,673,304 steps, 16,348,011 nodes allocated, 26 s
+ok   N = 192 (n = 6): 251,744,374 steps, 16,348,011 nodes allocated, 26 s
+ok   N = 300 (n = 9): 2,737,632,947 steps, 185,705,695 nodes allocated, 304 s
+ok   N = 2304 (n = 9): 2,787,405,822 steps, 185,713,711 nodes allocated, 315 s
+
+31 passed, 0 failed
