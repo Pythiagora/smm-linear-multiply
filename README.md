@@ -309,14 +309,15 @@ chaque classe, N = n·2ⁿ⁻¹.
 |---|---|---|---|---|---|---|---|
 | 6 | 4 | 192 | 251 790 964 | 1 311 411 | 655 706 | 8,0 M | 29 s |
 | 9 | 8 | 2 304 | 2 787 786 704 | 1 209 977 | 604 988 | 13,2 M | 320 s |
-| 12 | 16 | 24 576 | *voir `results/bench_faithful.jsonl`* | | | | |
+| 12 | 16 | 24 576 | 31 953 715 917 | 1 300 200 | 650 100 | 40,7 M | 3 127 s |
 
 Lecture :
 
-- **pas / (n·2ⁿ)**, le coût d'un « emplacement de papillon », est plat : c'est la linéarité.
-- **pas / N décroît** avec n : dans O(m + b²B²) par balayage, la part b²B² (le calcul des
-  opérations distinctes) est fixe alors que m = 2ⁿ⁻¹ croît. À n = 6, B² = 16 opérations distinctes
-  pour m = 32 programmes : le terme « fixe » domine encore.
+- **pas / N est plat** sur un facteur 128 de N (1,21 à 1,31 M) : c'est la linéarité.
+- Le creux à n = 9 et la remontée à n = 12 viennent du terme b²B² de O(m + b²B²) : B² opérations
+  distinctes sont calculées à chaque balayage quel que soit m, et le plafond de 512 programmes par
+  session ramène m/B² à 2 pour n = 12 (8 pour n = 9, 4 pour n = 6). Lever le plafond ferait
+  baisser la constante à n = 12 au prix de la mémoire vive.
 - La constante est grande (≈ 1,2 M de pas par bit d'entrée) : ≈ 5 300 opérations de base par
   papillon, ≈ 60 pas SMM par opération (construction ≈ 12, collecte ≈ 10, deux tris ≈ 16, calcul
   amorti, distribution ≈ 5), 2n + 1 étages. C'est le théorème tel quel : linéaire, pas rapide.
@@ -401,4 +402,5 @@ results/bench.jsonl, bench_summary.txt, test_full.log      la version NTT
 6. Mémoire : stockage en `array` essayé (2,4× plus lent) et abandonné ; ramasse-miettes ; puis la
    fuite du nœud auxiliaire du tri (§5), trouvée en mesurant les nœuds vivants après chaque
    collecte : 9,7 M → 1 M.
-7. Bancs sur poito (n = 6, 9, 12), suite complète, référence = compilé.
+7. Bancs sur poito (n = 6, 9, 12 ; le run n = 12 : 32 G de pas, 52 min, 62 collectes, 1,9 G de `new`),
+   suite complète, référence = compilé.

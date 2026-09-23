@@ -46,17 +46,18 @@ expected values.
 Measurements (``--bench``, poito, 23/09/2026; ``results/bench_faithful.jsonl``).  The work of a run
 is fixed by n, so the honest abscissa is the largest N of each class, N = n·2^{n-1}:
 
-    n   B      N          steps    steps/N   steps/(n·2^n)   peak live nodes
-    6   4    192    251,790,964  1,311,411         655,706        8.0 M
-    9   8   2304  2,787,786,704  1,209,977         604,988       13.2 M
-   12  16  24576   (see results/bench_faithful.jsonl)
+    n   B      N           steps    steps/N   steps/(n·2^n)   peak live nodes   time
+    6   4    192     251,790,964  1,311,411         655,706        8.0 M       29 s
+    9   8   2304   2,787,786,704  1,209,977         604,988       13.2 M      320 s
+   12  16  24576  31,953,715,917  1,300,200         650,100       40.7 M     3127 s
 
-Steps per butterfly slot (n·2^n of them over the two transforms and the back transformation) are
-flat, and steps/N falls with n because the O(b²B²) part of a sweep (Lemma 6.2) shrinks against
-m = 2^{n-1}: the linear bound with a large constant, as the paper has it.  Of the steps, ≈ 59 % go
-to the two forward transforms, 31 % to the back transformation, 7 % to the pointwise products and
-4 % to the powers of the roots; everything else (input, parameters, B-scale, roots in binary,
-rounding, output) is below 0.5 %.  ``--test`` runs 31 checks (paper's §2 counterexample, syntax
+Steps per input bit are flat over a 128-fold range of N: the linear bound, with a large constant,
+as the paper has it.  The dip at n = 9 and the rise at n = 12 come from the O(b²B²) part of a sweep
+(Lemma 6.2): B² distinct operations are computed per sweep whatever m is, and the cap of 2^9
+programs per session keeps m/B² at 2 for n = 12 (it is 8 for n = 9 and 4 for n = 6).  Of the steps,
+≈ 59 % go to the two forward transforms, 31 % to the back transformation, 7 % to the pointwise
+products and 4 % to the powers of the roots; everything else (input, parameters, B-scale, roots in
+binary, rounding, output) is below 0.5 %.  ``--test`` runs 31 checks (paper's §2 counterexample, syntax
 round trip, all digit pairs for B = 4, 8, 16, every numerical program against the host model,
 roots and powers digit for digit, reference interpreter = compiled machine to the step, products
 against Python integers up to N = 2304).
