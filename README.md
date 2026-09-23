@@ -9,7 +9,7 @@ Deux fichiers Python (bibliothèque standard seulement, typés, `ruff` propre) :
 | fichier | ce que c'est | statut |
 |---|---|---|
 | `smm_schoenhage.py` | **la version fidèle au §6 du papier** : alphabet {P, Q, S, W}, langage du §2, B-scale, production en masse avec le programme de tri du papier recopié mot pour mot, FFT complexe en virgule fixe | ce qu'il faut lire |
-| `smm_multiply.py` | la première version, écrite d'après le prompt de départ : SMM sur {0, 1}, transformée modulaire exacte (NTT) et table de chiffres précalculée | gardée pour l'histoire et la comparaison |
+| `smm_multiply.py` | la première version, écrite avant d'avoir le papier : SMM sur {0, 1}, transformée modulaire exacte (NTT) et table de chiffres précalculée | gardée pour l'histoire et la comparaison |
 
 Tout ce qui est calculé est calculé par la machine, par manipulation de pointeurs. L'hôte Python
 encode la bande d'entrée, décode la bande de sortie, et (dans les tests) recalcule les valeurs
@@ -71,18 +71,13 @@ p\*(PP) = p\*(QQ) = A ≠ p\*(P), parce que `new` recopie les anciens pointeurs.
 
 ---
 
-## 2. Pourquoi ce n'est pas trivial, et pourquoi le prompt de départ était faux
+## 2. Pourquoi ce n'est pas trivial
 
-Le prompt qui a lancé ce travail demandait de « construire dynamiquement un trie de recherche pour
-des blocs de k = O(log n) bits, puis sommer les blocs en diagonale avec propagation de retenue ».
-Cette recette n'est **pas** linéaire :
-
-- une recherche dans un trie de profondeur k coûte k = Θ(log n) pas ;
-- sommer les n²/k² produits de blocs en diagonale coûte Θ(n²/log² n) recherches.
-
-Pire : sur une machine à pointeurs de degré borné, **aucune** recherche en table ne peut coûter O(1)
-dans le pire cas (argument de comptage : en t pas on n'atteint que O(deg^t) nœuds, alors qu'il y a
-2^k entrées). Le O(N) de Schönhage vient de deux idées qui contournent cela :
+La multiplication d'école par blocs de k = O(log n) bits, avec une table des produits de blocs,
+semble donner O(n²/log² n) recherches à O(1) chacune. Sur une machine à pointeurs de degré borné,
+**aucune** recherche en table ne coûte O(1) dans le pire cas : en t pas on n'atteint que O(deg^t)
+nœuds, alors qu'il y a 2^k entrées, donc une recherche coûte Θ(k) = Θ(log n) et le total reste
+quadratique à un facteur log près. Le O(N) de Schönhage vient de deux idées :
 
 1. **Une transformée de Fourier rapide** sur des mots de Θ(log N) bits : le nombre d'opérations sur
    chiffres tombe à O(N).
@@ -387,8 +382,8 @@ results/bench.jsonl, bench_summary.txt, test_full.log      la version NTT
 
 ## 11. Ce qui a été fait, dans l'ordre (23/09/2026)
 
-1. Lecture du prompt ; constat que sa recette (trie + diagonales) est Θ(n²/log² n) ; écriture de la
-   version NTT avec recherches groupées, tests, banc.
+1. Première version (NTT, recherches groupées après tri) écrite avant d'avoir le papier, à partir de
+   sa description de seconde main ; tests, banc.
 2. Recherche du papier de 1980 (accès fermé ; l'abstract LNCS 67 de 1979 fait deux pages) ; le PDF
    fourni, lecture du §6.
 3. Modèle hôte exact de l'arithmétique du §6.3 pour vérifier la précision annoncée avant d'écrire
